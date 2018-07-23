@@ -8,6 +8,7 @@ namespace WixToolset.Tools
     using System.IO;
     using WixToolset.Data;
     using WixToolset.Extensibility;
+    using WixToolset.Extensibility.Data;
     using WixToolset.Extensibility.Services;
 
     public class LightCommandLine

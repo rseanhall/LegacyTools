@@ -14,6 +14,7 @@ namespace WixToolset.Tools
     using WixToolset.Data;
     using WixToolset.Data.Bind;
     using WixToolset.Extensibility;
+    using WixToolset.Extensibility.Data;
     using WixToolset.Extensibility.Services;
 
     /// <summary>
@@ -107,7 +108,6 @@ namespace WixToolset.Tools
 
             var context = serviceProvider.GetService<ICommandLineContext>();
             context.ExtensionManager = extensionManager;
-            context.Messaging = messaging;
             context.Arguments = arguments;
 
             this.commandLine = new LightCommandLine(messaging);
