@@ -11,6 +11,7 @@ namespace WixToolsetTest.LightIntegration
 
     public class LightFixture
     {
+#if false
         [Fact]
         public void CanBuildFromWixout()
         {
@@ -44,5 +45,6 @@ namespace WixToolsetTest.LightIntegration
                 }, builtFiles.Select(f => f.Substring(binFolder.Length)).OrderBy(s => s).ToArray());
             }
         }
+#endif
     }
 }

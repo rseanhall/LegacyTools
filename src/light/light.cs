@@ -12,7 +12,6 @@ namespace WixToolset.Tools
     using System.Threading;
     using WixToolset.Core;
     using WixToolset.Data;
-    using WixToolset.Data.Bind;
     using WixToolset.Extensibility;
     using WixToolset.Extensibility.Data;
     using WixToolset.Extensibility.Services;
@@ -118,6 +117,7 @@ namespace WixToolset.Tools
 
         private void Bind(IServiceProvider serviceProvider, IMessaging messaging)
         {
+#if false
             var output = this.LoadWixout(messaging);
 
             if (messaging.EncounteredError)
@@ -131,7 +131,7 @@ namespace WixToolset.Tools
                 intermediateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             }
 
-            var localizations = this.LoadLocalizationFiles(messaging, this.commandLine.LocalizationFiles);
+            var localizations = this.LoadLocalizationFiles(serviceProvider, this.commandLine.LocalizationFiles);
 
             if (messaging.EncounteredError)
             {
@@ -190,6 +190,7 @@ namespace WixToolset.Tools
 
                 layout.Execute();
             }
+#endif
         }
 
         private void Run(IMessaging messaging)
@@ -483,11 +484,13 @@ namespace WixToolset.Tools
             return false;
         }
 
-        private IEnumerable<Localization> LoadLocalizationFiles(IMessaging messaging, IEnumerable<string> locFiles)
+        private IEnumerable<Localization> LoadLocalizationFiles(IServiceProvider serviceProvider, IEnumerable<string> locFiles)
         {
+            var localizer = serviceProvider.GetService<ILocalizer>();
+
             foreach (var loc in locFiles)
             {
-                var localization = Localizer.ParseLocalizationFile(messaging, loc);
+                var localization = localizer.ParseLocalizationFile(loc);
 
                 yield return localization;
             }
